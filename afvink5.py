@@ -2,8 +2,8 @@ class DNA:
     def __init__(self,seq):
         self.seq = seq
         self.lenght = len(self.seq)
-        self.gctotal = 0
-        self.gcpercentage = 0
+        self.gctotal = ""
+        self.gcper = 0
     def getdna(self):
         return self.seq
     def gettranscript(self):
@@ -24,21 +24,37 @@ class DNA:
         self.seq = seq
         return(self.seq)
     def getlenght(self):
+        self.length = len(self.seq)
         return(self.lenght)
     def getgcpercentage(self):
-        for line in self.seq:
-            print(line)
-            self.gctotal = line.count("G")+line.count("C")
-            self.gcpercentage = (self.gctotal/self.lenght)*100
-            #print(self.gcpercentage)
-        return(self.gcpercentage)
+        self.gcper = 0
+        CGG = 0
+        CGC = 0
+        """
+        try:
+            print(self.seq)
+            for letter in self.seq:
+                if letter == "G":
+                    CGG += 1
+                if letter == "C":
+                    CGC += 1
+            self.gcper = ((CGG+CGC)/(len(self.seq)))*100
+        except ZeroDivisionError:
+            self.gcper = 100
+        """
+        print(self.seq)
+        for item in self.seq:
+            self.gctotal = self.seq.count("G")+self.seq.count("C")
+            self.gcpercentage = (self.gctotal/(self.getlenght())*100)
+        #print(self.gcpercentage)
+        return(self.gcper)
 
 def main():
-    IS, IH = file()
+    IH, IS = file()
     dnaobjecten = objectmaking(IS)
-    gcpercentage(dnaobjecten)
+    print(gcpercentage(dnaobjecten))
 def file():
-    file = open("/home/stef/Documents/Python/course2/afvink5/Felis_catus.Felis_catus_8.0.cdna.all.fa")
+    file = open("test")
     IH = []
     IS = []
     dna = ""
@@ -51,6 +67,7 @@ def file():
             line = line.replace("\n", "")
             dna += (line)
     IS = dna.split(" ")
+    del(IS[0])
     return (IH, IS)
 
 def objectmaking(IS):
@@ -61,10 +78,10 @@ def objectmaking(IS):
     return(objects)
 
 def gcpercentage(dnaobjecten):
-    gcpercentage = []
-    for item in dnaobjecten:
-        gcpercentage.append(item.getgcpercentage())
-    #print(gcpercentage)
+    gclijst = []
+    for object in dnaobjecten:
+        gclijst.append(object.getgcpercentage())
+    return(gclijst)
 
 
 #sequentie = "AAAATTTTCCCCCGGGGACTCGA"
