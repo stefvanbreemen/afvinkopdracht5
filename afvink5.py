@@ -1,7 +1,7 @@
 class DNA:
     def __init__(self,seq):
         self.seq = seq
-        self.lenght = len(self.seq)
+        self.length = len(self.seq)
         self.gctotal = ""
         self.gcper = 0
     def getdna(self):
@@ -23,36 +23,19 @@ class DNA:
                  seq += letter
         self.seq = seq
         return(self.seq)
-    def getlenght(self):
+    def getlength(self):
         self.length = len(self.seq)
-        return(self.lenght)
+        return(self.length)
     def getgcpercentage(self):
         self.gcper = 0
-        CGG = 0
-        CGC = 0
-        """
-        try:
-            print(self.seq)
-            for letter in self.seq:
-                if letter == "G":
-                    CGG += 1
-                if letter == "C":
-                    CGC += 1
-            self.gcper = ((CGG+CGC)/(len(self.seq)))*100
-        except ZeroDivisionError:
-            self.gcper = 100
-        """
-        print(self.seq)
-        for item in self.seq:
-            self.gctotal = self.seq.count("G")+self.seq.count("C")
-            self.gcpercentage = (self.gctotal/(self.getlenght())*100)
-        #print(self.gcpercentage)
+        self.gctotal = self.seq.count("G")+self.seq.count("C")
+        self.gcper = (self.gctotal/(self.getlength())*100)
         return(self.gcper)
 
 def main():
     IH, IS = file()
     dnaobjecten = objectmaking(IS)
-    print(gcpercentage(dnaobjecten))
+    gcpercentage(dnaobjecten,IH)
 def file():
     file = open("test")
     IH = []
@@ -73,19 +56,20 @@ def file():
 def objectmaking(IS):
     objects = []
     for sequentie in IS:
-        seq = DNA(IS)
+        seq = DNA(sequentie)
         objects.append(seq)
     return(objects)
 
-def gcpercentage(dnaobjecten):
+def gcpercentage(dnaobjecten,IH):
     gclijst = []
-    for object in dnaobjecten:
-        gclijst.append(object.getgcpercentage())
+    for item in dnaobjecten:
+        gclijst.append(item.getgcpercentage())
+
+    max1 = 0
+    max1 = gclijst.index(max(gclijst))
+    print(max(gclijst))
+    print(dnaobjecten[max1].gettranscript())
+    print(dnaobjecten[max1].getlength())
     return(gclijst)
 
-
-#sequentie = "AAAATTTTCCCCCGGGGACTCGA"
-#s = DNA(sequentie)
-#s1 = s.gettranscript()
-#l = s.getlenght()
 main()
